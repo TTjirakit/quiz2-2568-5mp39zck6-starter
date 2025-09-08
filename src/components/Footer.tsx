@@ -1,10 +1,12 @@
-import { Text, Group } from "@mantine/core";
-export default function Footer(/* add props here */) {
+// import { Text, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
+import type { FooterProps } from "../libs/Footer";
+export default function Footer(props:FooterProps) {
   return (
     <Group p="md" justify="center">
-      <Text>
-        © CPE207-2025 Chanadda 670612999. All rights reserved.
-      </Text>
+        <text>
+        {props.courseName}-{props.year} {props.fullName} {props.studentId}. All rights reserved.
+      </text>
     </Group>
   );
 }
