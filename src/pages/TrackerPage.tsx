@@ -19,13 +19,21 @@ export default function ExpenseTracker() {
       <Title order={2} mb="md">
         Expense Tracker
       </Title>
-      <Button>Add Expense Item</Button>
-      {/* Type additional AddExpenseModal here. */}
+      <Button
+        type="button"
+        className="m-4 btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#modalexpense"
+        >Add Expense Item</Button>
 
       <Divider my="md" />
       {/* Type additional total cost here. */}
       <Title order={4}>Total cost: {} Baht</Title>
-      <Stack my="sm">{/* Type additional text here. */}</Stack>
+      <Stack my="sm">
+          Electronics: {} Baht
+          Clothing: {} Baht
+          Home & Living {} Baht
+      </Stack>
 
       <Divider my="md" />
       {/* Type additional card here. */}

@@ -1,39 +1,52 @@
-import { Card, Group, Badge, ActionIcon, Text } from "@mantine/core";
+import { Card, Group, Badge, ActionIcon, Text, Stack } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
+import { useState } from "react";
+import AddExpenseModal from "./Modal";
 
-// type ExpenseProps = {
-//   name: string;
-//   amount: number | string;
-//   category: string;
-//   onDelete: () => void;
-// };
+
+type Expense = {
+  name: string;
+  amount: number;
+  category: string;
+};
 
 export default function ItemCard() {
-  // หากต้องการเปลี่ยนแปลง type ชนิด string เป็น number สามารถใช้วิธีการดังโค้ดตัวอย่างด้านล่างนี้ได้
-  let val_number: number = Number("500.0");
-  console.log(val_number + 100); // 600.0
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+
+  const handleAdd = (name: string, amount: string | number, category: string) => {
+    setExpenses([...expenses, { name, amount: Number(amount), category }]);
+  };
+
+  const handleDelete = (index: number) => {
+    setExpenses(expenses.filter((_, i) => i !== index));
+  };
+
+  const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
   return (
-     <Card p="md">
+    <Stack>
+      <AddExpenseModal onAdd={handleAdd} opened={false} onClose={function (): void {
+        throw new Error("Function not implemented.");
+      } } />
 
-      <Group justify="space-between" mt="md" mb="xs">
-      <Text>
-          
-      </Text>
+      {expenses.map((exp, index) => (
+        <Card key={index} p="md" shadow="sm">
+          <Group justify="space-between" mt="md" mb="xs">
+            <Text>{exp.name}</Text>
+            <Text>{exp.amount}</Text>
+            <Badge color="blue" radius="md">
+              {exp.category}
+            </Badge>
+            <ActionIcon color="red" onClick={() => handleDelete(index)}>
+              <IconTrash />
+            </ActionIcon>
+          </Group>
+        </Card>
+      ))}
 
-      <Text>
-        
-      </Text>
-
-      <Badge color="blue" radius="md">
-        ExpenseProps.category
-      </Badge>
-     
-      <ActionIcon color="red">
-        <IconTrash/>
-      </ActionIcon>
-
-      </Group>
-    </Card>
+      <Card p="md" shadow="sm">
+        <Text fw={700}>Total: {total}</Text>
+      </Card>
+    </Stack>
   );
 }
